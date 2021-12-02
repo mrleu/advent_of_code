@@ -6,7 +6,7 @@ down 8
 forward 2"""
 
 # part 1
-files = open('input.txt').read().split('\n')[:~0]
+files = open('input.txt').read().splitlines()
 parsed = [x.split(' ') for x in files]
 start = [0, 0]
 for (d, idx) in parsed:
