@@ -6,16 +6,16 @@ down 8
 forward 2"""
 
 # part 1
-files = open('input.txt').read().split('\n')
-parsed = [x.split(' ') for x in files if x != '']
+files = open('input.txt').read().split('\n')[:~0]
+parsed = [x.split(' ') for x in files]
 start = [0, 0]
 for (d, idx) in parsed:
     idx = int(idx)
     if d == 'forward':
         start[0] += idx
-    if d == 'down':
+    elif d == 'down':
         start[1] += idx
-    if d == 'up':
+    elif d == 'up':
         start[1] -= idx
 print(f"Solution for part 1: {start[0] * start[1]}")
 
@@ -26,9 +26,9 @@ for (d, idx) in parsed:
     if d == 'forward':
         start[0] += idx
         start[1] += (start[2] * idx)
-    if d == 'down':
+    elif d == 'down':
         start[2] += idx
-    if d == 'up':
+    elif d == 'up':
         start[2] -= idx
 print(f"Solution for part 2: {start[0] * start[1]}")
 
