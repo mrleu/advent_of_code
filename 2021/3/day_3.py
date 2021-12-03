@@ -1,4 +1,8 @@
-raw = """00100
+"""
+Day 3 of advent of code.
+"""
+
+RAW = """00100
 11110
 10110
 10111
@@ -12,9 +16,11 @@ raw = """00100
 01010"""
 
 
-data = raw.split("\n")
+data = RAW.split("\n")
 
-data = open("input.txt").read().splitlines()
+with open("input.txt", "r", encoding="utf-8") as file:
+    data = file.read().splitlines()
+
 dp = [0] * len(data[0])
 total_n = len(data)
 
@@ -22,13 +28,14 @@ for row_n, row in enumerate(data):
     for col in range(len(row)):
         dp[col] += int(data[row_n][col])
 
-result = "".join(["1" if x > (total_n // 2) else "0" for x in dp])
-decimal_gamma = int(result, 2)
-decimal_epsilon = int("".join(["0" if x == "1" else "1" for x in result]), 2)
-print(f"Part 1 result is {decimal_gamma * decimal_epsilon}")
+RESULT = "".join(["1" if x > (total_n // 2) else "0" for x in dp])
+DECIMAL_GAMMA = int(RESULT, 2)
+DECIMAL_EPSILON = int("".join(["0" if x == "1" else "1" for x in RESULT]), 2)
+print(f"Part 1 RESULT is {DECIMAL_GAMMA * DECIMAL_EPSILON}")
 
 # part 2
-data = open("input.txt").read().splitlines()
+with open("input.txt", "r", encoding="utf-8") as file:
+    data = file.read().splitlines()
 total_n = len(data[0])
 
 queue = data
@@ -47,4 +54,4 @@ for i in range(total_n):
         queue = one_queue if len(one_queue) < len(zero_queue) else zero_queue
 carbon = queue[0]
 print(f"Oxygen is {oxygen}, carbon is {carbon}")
-print(f"Part 2 result is {int(oxygen,2) * int(carbon, 2)}")
+print(f"Part 2 RESULT is {int(oxygen,2) * int(carbon, 2)}")
