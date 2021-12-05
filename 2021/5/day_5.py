@@ -1,5 +1,5 @@
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Iterator, Tuple
 
 
@@ -20,10 +20,11 @@ class LineSegmentMap:
         self, start: Coordinate, end: Coordinate, dx: int, dy: int
     ) -> None:
         self.counter[str(start)] += 1
-        while not (start == end):
-            start.x += dx
-            start.y += dy
-            self.counter[str(start)] += 1
+        current = Coordinate(**asdict(start))
+        while not (current == end):
+            current.x += dx
+            current.y += dy
+            self.counter[str(current)] += 1
 
     def print_overlapped_coordinates(self) -> None:
         n_overlapped_coordinates = len(
@@ -49,11 +50,11 @@ def parse_line(line: str) -> Tuple[Coordinate, Coordinate]:
 
 
 def is_vertical(start: Coordinate, end: Coordinate) -> bool:
-    return True if start.x == end.x else False
+    return start.x == end.x
 
 
 def is_horizontal(start: Coordinate, end: Coordinate) -> bool:
-    return True if start.y == end.y else False
+    return start.y == end.y
 
 
 def is_diagonal(start: Coordinate, end: Coordinate) -> bool:
