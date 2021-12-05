@@ -43,8 +43,7 @@ class LineSegmentMap:
 
 def read_lines(filename: str) -> Iterator[str]:
     with open(filename) as f:
-        for line in f:
-            yield line
+        yield from f
 
 
 def parse_line(line: str) -> Tuple[Coordinate, Coordinate]:
