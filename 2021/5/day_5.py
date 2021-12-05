@@ -68,22 +68,21 @@ def is_diagonal(start: Coordinate, end: Coordinate) -> bool:
 
 def part1(filename: str) -> None:
     print("=" * 10, "Part 1", "=" * 10)
-    line_segment_map: LineSegmentMap = LineSegmentMap()
+    line_segment_map = LineSegmentMap()
     lines = read_lines(filename)
     for line in lines:
         start, end = parse_line(line)
 
         if is_vertical(start, end):
-            dy = 1 if start.y < end.y else -1
-            line_segment_map.add_interm_points(start, end, 0, dy)
+            dx, dy = 0, 1 if start.y < end.y else -1
 
         elif is_horizontal(start, end):
-            dx = 1 if start.x < end.x else -1
-            line_segment_map.add_interm_points(start, end, dx, 0)
+            dx, dy = 1 if start.x < end.x else -1, 0
 
         else:
             continue
 
+        line_segment_map.add_interm_points(start, end, dx, dy)
     line_segment_map.print_overlapped_coordinates()
 
 
@@ -95,23 +94,19 @@ def part2(filename: str) -> None:
         start, end = parse_line(line)
 
         if is_vertical(start, end):
-            dx = 0
-            dy = 1 if start.y < end.y else -1
-            line_segment_map.add_interm_points(start, end, dx, dy)
+            dx, dy = 0, 1 if start.y < end.y else -1
 
         elif is_horizontal(start, end):
-            dx = 1 if start.x < end.x else -1
-            dy = 0
-            line_segment_map.add_interm_points(start, end, dx, dy)
+            dx, dy = 1 if start.x < end.x else -1, 0
 
         elif is_diagonal(start, end):
             dx = 1 if start.x < end.x else -1
             dy = 1 if start.y < end.y else -1
-            line_segment_map.add_interm_points(start, end, dx, dy)
 
         else:
             continue
 
+        line_segment_map.add_interm_points(start, end, dx, dy)
     line_segment_map.print_overlapped_coordinates()
 
 
