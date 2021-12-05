@@ -8,11 +8,6 @@ class Coordinate:
     x: int
     y: int
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Coordinate):
-            return NotImplemented
-        return self.x == other.x and self.y == other.y
-
     def __str__(self) -> str:
         return f"{self.x}-{self.y}"
 
