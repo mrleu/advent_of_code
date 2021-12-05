@@ -54,18 +54,15 @@ def print_overlapped_coordinates(line_segment_map: Counter[str]) -> None:
 
 
 def add_interm_points(
-    start: Coordinate,
-    end: Coordinate,
-    dx: int,
-    dy: int,
-    line_segment_map: Counter[str],
+    start: Coordinate, end: Coordinate, dx: int, dy: int
 ) -> Counter[str]:
-    line_segment_map[str(start)] += 1
+    interm_points_count: Counter[str] = Counter()
+    interm_points_count[str(start)] += 1
     while not (start == end):
         start.x += dx
         start.y += dy
-        line_segment_map[str(start)] += 1
-    return line_segment_map
+        interm_points_count[str(start)] += 1
+    return interm_points_count
 
 
 def part1(filename: str) -> None:
@@ -77,11 +74,11 @@ def part1(filename: str) -> None:
 
         if is_vertical(start, end):
             dy = 1 if start.y < end.y else -1
-            line_segment_map = add_interm_points(start, end, 0, dy, line_segment_map)
+            line_segment_map += add_interm_points(start, end, 0, dy)
 
         elif is_horizontal(start, end):
             dx = 1 if start.x < end.x else -1
-            line_segment_map = add_interm_points(start, end, dx, 0, line_segment_map)
+            line_segment_map += add_interm_points(start, end, dx, 0)
 
     print_overlapped_coordinates(line_segment_map)
 
@@ -95,16 +92,16 @@ def part2(filename: str) -> None:
 
         if is_vertical(start, end):
             dy = 1 if start.y < end.y else -1
-            line_segment_map = add_interm_points(start, end, 0, dy, line_segment_map)
+            line_segment_map += add_interm_points(start, end, 0, dy)
 
         elif is_horizontal(start, end):
             dx = 1 if start.x < end.x else -1
-            line_segment_map = add_interm_points(start, end, dx, 0, line_segment_map)
+            line_segment_map += add_interm_points(start, end, dx, 0)
 
         elif is_diagonal(start, end):
             dx = 1 if start.x < end.x else -1
             dy = 1 if start.y < end.y else -1
-            line_segment_map = add_interm_points(start, end, dx, dy, line_segment_map)
+            line_segment_map += add_interm_points(start, end, dx, dy)
 
     print_overlapped_coordinates(line_segment_map)
 
