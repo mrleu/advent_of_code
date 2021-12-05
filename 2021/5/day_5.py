@@ -25,9 +25,9 @@ def read_lines(filename: str) -> Iterator[str]:
 
 def parse_line(line: str) -> Tuple[Coordinate, Coordinate]:
     start, end = line.split(" -> ")
-    start_x, start_y = start.split(",")
-    end_x, end_y = end.split(",")
-    return (Coordinate(int(start_x), int(start_y)), Coordinate(int(end_x), int(end_y)))
+    start_x, start_y = map(int, start.split(","))
+    end_x, end_y = map(int, end.split(","))
+    return (Coordinate(start_x, start_y), Coordinate(end_x, end_y))
 
 
 def is_vertical(start: Coordinate, end: Coordinate) -> bool:
