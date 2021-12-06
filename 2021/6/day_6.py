@@ -24,11 +24,13 @@ def count_lanternfish(filename: str, days: int) -> None:
 
 
 def part1(filename: str) -> None:
-    count_lanternfish(filename, 80)
+    print("Part 1")
+    count_lanternfish(filename=filename, days=80)
 
 
 def part2(filename: str) -> None:
-    count_lanternfish(filename, 256)
+    print("Part 2")
+    count_lanternfish(filename=filename, days=256)
 
 
 if __name__ == "__main__":
