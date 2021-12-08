@@ -25,7 +25,7 @@ def part2(cleaned: list[int]) -> None:
 
 
 def main() -> None:
-    cleaned = read_file("input.txt")
+    cleaned = read_file("example.txt")
     part1(cleaned)
     part2(cleaned)
 
