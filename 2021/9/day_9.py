@@ -1,3 +1,4 @@
+import heapq
 from operator import mul
 from dataclasses import dataclass
 from functools import reduce
@@ -72,7 +73,7 @@ def part1(low_points: list[Point]) -> None:
 
 def part2(low_points: list[Point], data: list[list[int]]) -> None:
     total_sizes = get_total_sizes(low_points, data)
-    product_three_largest = reduce(mul, sorted(total_sizes, reverse=True)[:3])
+    product_three_largest = reduce(mul, heapq.nlargest(3, total_sizes))
     print(f"Three Largest basin product is:", product_three_largest)
 
 
