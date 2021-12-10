@@ -15,8 +15,7 @@ for line in raw.split("\n"):
         if char in open_close_map.keys():
             queue.append(char)
         else:
-            take_out = queue.pop()
-            if take_out != close_open_map[char]:
+            if queue.pop() != close_open_map[char]:
                 corrupted.append(char)
                 broken = True
     if not broken:
@@ -31,5 +30,4 @@ for incomplete in incompletes:
         score *= 5
         score += incomplete_character_points[char]
     scores.append(score)
-sorted_scores = sorted(scores)
-print("Part 2 score:", sorted_scores[int((len(scores) - 1) / 2)])
+print("Part 2 score:", sorted(scores)[len(scores) // 2])
