@@ -1,3 +1,5 @@
+import itertools
+
 N_FLASHES = 0
 COVERED = 100
 
@@ -11,11 +13,10 @@ def read_data() -> list[list[int]]:
 def flash(matrix: list[list[int]], row: int, col: int) -> None:
     global N_FLASHES
     N_FLASHES += 1
-    directions = [(0, 1), (1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1), (0, -1), (-1, 0)]
     matrix[row][col] = COVERED
-    for dy, dx in directions:
-        new_row = row + dy
-        new_col = col + dx
+    for new_row, new_col in [
+        (row + dy, col + dx) for dy, dx in itertools.product([0, 1, -1], repeat=2)
+    ]:
         if (
             0 <= new_row < len(matrix)
             and 0 <= new_col < len(matrix[0])
@@ -28,7 +29,6 @@ def flash(matrix: list[list[int]], row: int, col: int) -> None:
 
 
 def increase_energy(matrix: list[list[int]]) -> None:
-    # increase everything by one
     for row in range(len(matrix)):
         for col in range(len(matrix[0])):
             matrix[row][col] += 1
