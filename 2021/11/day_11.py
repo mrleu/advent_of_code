@@ -43,18 +43,16 @@ def ready_to_flash(matrix: list[list[int]]) -> None:
 
 def main() -> None:
     matrix = read_data()
-    n = 1
-    while True:
+    for n in itertools.count(1):
         increase_energy(matrix)
         ready_to_flash(matrix)
 
         if n == 100:
             print("Part 1: Number of flashes", N_FLASHES)
 
-        if all([set(row) == {0} for row in matrix]):
+        if sum([energy for row in matrix for energy in row]) == 0:
             print("Part 2: Hit zero at", n)
             break
-        n += 1
 
 
 if __name__ == "__main__":
