@@ -1,6 +1,5 @@
 N_FLASHES = 0
 COVERED = 100
-EPOCHS = 300
 
 
 def read_data() -> list[list[int]]:
@@ -42,7 +41,8 @@ def increase_energy(matrix: list[list[int]]) -> list[list[int]]:
 
 def main() -> None:
     matrix = read_data()
-    for n in range(EPOCHS):
+    n = 1
+    while True:
         increase_energy(matrix)
 
         # flash
@@ -51,11 +51,13 @@ def main() -> None:
                 if matrix[row][col] > 9:
                     flash(matrix, row, col)
 
-        if n + 1 == 100:
+        if n == 100:
             print("Part 1: Number of flashes", N_FLASHES)
+
         if all([set(row) == {0} for row in matrix]):
-            print("Part 2: Hit zero at", n + 1)
+            print("Part 2: Hit zero at", n)
             break
+        n += 1
 
 
 if __name__ == "__main__":
