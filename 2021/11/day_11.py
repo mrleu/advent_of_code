@@ -8,7 +8,7 @@ def read_data() -> list[list[int]]:
         return [list(map(int, list(x))) for x in raw.strip().split("\n")]
 
 
-def flash(matrix: list[list[int]], row: int, col: int) -> list[list[int]]:
+def flash(matrix: list[list[int]], row: int, col: int) -> None:
     global N_FLASHES
     N_FLASHES += 1
     directions = [(0, 1), (1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1), (0, -1), (-1, 0)]
@@ -28,15 +28,13 @@ def flash(matrix: list[list[int]], row: int, col: int) -> list[list[int]]:
             if matrix[r][c] != COVERED and matrix[r][c] > 9:
                 flash(matrix, r, c)
     matrix[row][col] = 0
-    return matrix
 
 
-def increase_energy(matrix: list[list[int]]) -> list[list[int]]:
+def increase_energy(matrix: list[list[int]]) -> None:
     # increase everything by one
     for row in range(len(matrix)):
         for col in range(len(matrix[0])):
             matrix[row][col] += 1
-    return matrix
 
 
 def main() -> None:
@@ -44,8 +42,6 @@ def main() -> None:
     n = 1
     while True:
         increase_energy(matrix)
-
-        # flash
         for row in range(len(matrix)):
             for col in range(len(matrix[0])):
                 if matrix[row][col] > 9:
