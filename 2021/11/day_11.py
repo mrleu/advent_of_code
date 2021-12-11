@@ -1,5 +1,6 @@
 N_FLASHES = 0
 COVERED = 100
+EPOCHS = 300
 
 
 def read_data() -> list[list[int]]:
@@ -31,14 +32,18 @@ def flash(matrix: list[list[int]], row: int, col: int) -> list[list[int]]:
     return matrix
 
 
+def increase_energy(matrix: list[list[int]]) -> list[list[int]]:
+    # increase everything by one
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            matrix[row][col] += 1
+    return matrix
+
+
 def main() -> None:
     matrix = read_data()
-    for n in range(300):
-
-        # increase everything by one
-        for row in range(len(matrix)):
-            for col in range(len(matrix[0])):
-                matrix[row][col] += 1
+    for n in range(EPOCHS):
+        increase_energy(matrix)
 
         # flash
         for row in range(len(matrix)):
