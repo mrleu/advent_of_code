@@ -23,10 +23,7 @@ def flash(matrix: list[list[int]], row: int, col: int) -> None:
         ):
             matrix[new_row][new_col] += 1
 
-    for r in range(len(matrix)):
-        for c in range(len(matrix[0])):
-            if matrix[r][c] != COVERED and matrix[r][c] > 9:
-                flash(matrix, r, c)
+    ready_to_flash(matrix)
     matrix[row][col] = 0
 
 
@@ -37,15 +34,19 @@ def increase_energy(matrix: list[list[int]]) -> None:
             matrix[row][col] += 1
 
 
+def ready_to_flash(matrix: list[list[int]]) -> None:
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            if matrix[row][col] != COVERED and matrix[row][col] > 9:
+                flash(matrix, row, col)
+
+
 def main() -> None:
     matrix = read_data()
     n = 1
     while True:
         increase_energy(matrix)
-        for row in range(len(matrix)):
-            for col in range(len(matrix[0])):
-                if matrix[row][col] > 9:
-                    flash(matrix, row, col)
+        ready_to_flash(matrix)
 
         if n == 100:
             print("Part 1: Number of flashes", N_FLASHES)
