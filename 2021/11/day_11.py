@@ -1,4 +1,4 @@
-n_flashes = 0
+N_FLASHES = 0
 COVERED = 100
 
 
@@ -9,8 +9,8 @@ def read_data() -> list[list[int]]:
 
 
 def flash(matrix: list[list[int]], row: int, col: int) -> list[list[int]]:
-    global n_flashes
-    n_flashes += 1
+    global N_FLASHES
+    N_FLASHES += 1
     directions = [(0, 1), (1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1), (0, -1), (-1, 0)]
     matrix[row][col] = COVERED
     for dy, dx in directions:
@@ -47,7 +47,7 @@ def main() -> None:
                     flash(matrix, row, col)
 
         if n + 1 == 100:
-            print("Part 1: Number of flashes", n_flashes)
+            print("Part 1: Number of flashes", N_FLASHES)
         if all([set(row) == {0} for row in matrix]):
             print("Part 2: Hit zero at", n + 1)
             break
