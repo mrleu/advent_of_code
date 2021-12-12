@@ -1,4 +1,4 @@
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 
 def read_data() -> list[list[str]]:
@@ -38,7 +38,7 @@ def part1(cave_map: defaultdict[str, list[str]]) -> None:
 def part2(cave_map: defaultdict[str, list[str]]) -> None:
     n_paths = 0
 
-    def backtracking(current_path: list[str]) -> None:
+    def backtracking(current_path: list[str], small_cave_revisited: bool) -> None:
         nonlocal n_paths
 
         if current_path[-1] == "end":
@@ -48,15 +48,14 @@ def part2(cave_map: defaultdict[str, list[str]]) -> None:
         last_cave = current_path[-1]
         for cave in cave_map[last_cave]:
             if cave not in current_path or cave.isupper():
-                backtracking(current_path + [cave])
+                backtracking(current_path + [cave], small_cave_revisited)
             elif cave in ["start", "end"]:
                 continue
             else:
-                counter = Counter([x for x in current_path if x.islower()])
-                if max(counter.values()) == 1:
-                    backtracking(current_path + [cave])
+                if not small_cave_revisited:
+                    backtracking(current_path + [cave], True)
 
-    backtracking(["start"])
+    backtracking(current_path=["start"], small_cave_revisited=False)
     print("Part 2", n_paths)
 
 
