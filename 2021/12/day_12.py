@@ -8,56 +8,55 @@ def read_data() -> list[list[str]]:
         return paths
 
 
-def create_cave_map(paths: list[list[str]]) -> defaultdict[str, list[str]]:
-    mapping = defaultdict(list)
-    for path in paths:
-        a, b = path
-        mapping[a].append(b)
-        mapping[b].append(a)
-    return mapping
+def create_cave_map(cave_paths: list[list[str]]) -> defaultdict[str, list[str]]:
+    cave_map = defaultdict(list)
+    for (cave_a, cave_b) in cave_paths:
+        cave_map[cave_a].append(cave_b)
+        cave_map[cave_b].append(cave_a)
+    return cave_map
 
 
-def part1(mapping: defaultdict[str, list[str]]) -> None:
+def part1(cave_map: defaultdict[str, list[str]]) -> None:
     n_paths = 0
 
-    def bt(cur: list[str]) -> None:
+    def backtracking(current_path: list[str]) -> None:
         nonlocal n_paths
-        if cur[-1] == "end":
+
+        if current_path[-1] == "end":
             n_paths += 1
             return
-        last_one = cur[-1]
-        for n in mapping[last_one]:
-            if n not in cur:
-                bt(cur + [n])
-            elif n.isupper():
-                bt(cur + [n])
 
-    bt(["start"])
+        last_cave = current_path[-1]
+        for cave in cave_map[last_cave]:
+            if cave not in current_path or cave.isupper():
+                backtracking(current_path + [cave])
+
+    backtracking(["start"])
     print("Part 1", n_paths)
 
 
-def part2(mapping: defaultdict[str, list[str]]) -> None:
+def part2(cave_map: defaultdict[str, list[str]]) -> None:
     n_paths = 0
 
-    def bt(cur: list[str]) -> None:
+    def backtracking(current_path: list[str]) -> None:
         nonlocal n_paths
-        if cur[-1] == "end":
+
+        if current_path[-1] == "end":
             n_paths += 1
             return
-        last_one = cur[-1]
-        for n in mapping[last_one]:
-            if n not in cur:
-                bt(cur + [n])
-            elif n.isupper():
-                bt(cur + [n])
-            elif n in ["start", "end"]:
+
+        last_cave = current_path[-1]
+        for cave in cave_map[last_cave]:
+            if cave not in current_path or cave.isupper():
+                backtracking(current_path + [cave])
+            elif cave in ["start", "end"]:
                 continue
             else:
-                counter = Counter([x for x in cur if x.islower()])
+                counter = Counter([x for x in current_path if x.islower()])
                 if max(counter.values()) == 1:
-                    bt(cur + [n])
+                    backtracking(current_path + [cave])
 
-    bt(["start"])
+    backtracking(["start"])
     print("Part 2", n_paths)
 
 
