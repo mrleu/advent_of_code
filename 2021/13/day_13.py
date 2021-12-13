@@ -17,9 +17,7 @@ def read_data() -> tuple[set[tuple[int, int]], list[tuple[str, int]]]:
 
 
 def fold_paper(
-    dots: set[tuple[int, int]],
-    instructions: list[tuple[str, int]],
-    one_fold: bool,
+    dots: set[tuple[int, int]], instructions: list[tuple[str, int]]
 ) -> set[tuple[int, int]]:
     for idx, (axis, position) in enumerate(instructions):
         temp_dots = set()
@@ -67,7 +65,7 @@ def read_transparent_paper(transparent_paper: list[list[str]]) -> None:
 
 def main() -> None:
     dots, instructions = read_data()
-    dots = fold_paper(dots, instructions, one_fold=False)
+    dots = fold_paper(dots, instructions)
     transparent_paper = create_transparent_paper(dots)
     read_transparent_paper(transparent_paper)
 
