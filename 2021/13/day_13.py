@@ -46,28 +46,20 @@ def read_visible_dots(dots: set[tuple[int, int]]) -> None:
     print("Number of dots after first fold:", len(dots))
 
 
-def create_transparent_paper(dots: set[tuple[int, int]]) -> list[list[str]]:
+def read_transparent_paper(dots: set[tuple[int, int]]) -> None:
+    print("=" * 10, "part 2", "=" * 10)
     max_x = max([x for (x, y) in dots])
     max_y = max([y for (x, y) in dots])
-    transparent_paper = []
-    for i in range(max_y + 1):
-        transparent_paper.append(["." for _ in range(max_x + 1)])
-    for (x, y) in dots:
-        transparent_paper[y][x] = "#"
-    return transparent_paper
-
-
-def read_transparent_paper(transparent_paper: list[list[str]]) -> None:
-    print("=" * 10, "part 2", "=" * 10)
-    for row in transparent_paper:
-        print("".join(row))
+    for y in range(max_y + 1):
+        for x in range(max_x + 1):
+            print(end="#" if (x, y) in dots else ".")
+        print()
 
 
 def main() -> None:
     dots, instructions = read_data()
     dots = fold_paper(dots, instructions)
-    transparent_paper = create_transparent_paper(dots)
-    read_transparent_paper(transparent_paper)
+    read_transparent_paper(dots)
 
 
 if __name__ == "__main__":
