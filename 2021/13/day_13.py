@@ -19,65 +19,57 @@ def read_data() -> tuple[set[tuple[int, int]], list[tuple[str, int]]]:
 def fold_paper(
     dots: set[tuple[int, int]],
     instructions: list[tuple[str, int]],
-    one_fold: bool = False,
+    one_fold: bool,
 ) -> set[tuple[int, int]]:
-    for (axis, position) in instructions:
-        new_dots = set()
+    for idx, (axis, position) in enumerate(instructions):
+        temp_dots = set()
         for dot in dots:
             x, y = dot
-            if axis == "y":
-                if y < position:
-                    new_dots.add((x, y))
-                elif y == position:
-                    continue
-                else:
-                    new_dots.add((x, position - (y - position)))
-            if axis == "x":
-                if x < position:
-                    new_dots.add((x, y))
-                elif x == position:
-                    continue
-                else:
-                    new_dots.add((position - (x - position), y))
-        dots = new_dots
-        if one_fold:
-            break
+            check_axis = x if axis == "x" else y
+            if check_axis == position:
+                continue
+            elif check_axis < position:
+                temp_dots.add((x, y))
+            else:
+                temp_dots.add((2 * position - x, y)) if axis == "x" else temp_dots.add(
+                    (x, 2 * position - y)
+                )
+
+        dots = temp_dots
+
+        if idx == 0:
+            read_visible_dots(dots)
+
     return dots
+
+
+def read_visible_dots(dots: set[tuple[int, int]]) -> None:
+    print("=" * 10, "part 1", "=" * 10)
+    print("Number of dots after first fold:", len(dots))
 
 
 def create_transparent_paper(dots: set[tuple[int, int]]) -> list[list[str]]:
     max_x = max([x for (x, y) in dots])
     max_y = max([y for (x, y) in dots])
-    grid = []
+    transparent_paper = []
     for i in range(max_y + 1):
-        grid.append(["." for _ in range(max_x + 1)])
+        transparent_paper.append(["." for _ in range(max_x + 1)])
     for (x, y) in dots:
-        grid[y][x] = "#"
-    return grid
+        transparent_paper[y][x] = "#"
+    return transparent_paper
 
 
-def read_transparent_paper(grid: list[list[str]]) -> None:
-    for row in grid:
-        print("".join(row))
-
-
-def part1(dots: set[tuple[int, int]], instructions: list[tuple[str, int]]) -> None:
-    print("=" * 10, "part 1", "=" * 10)
-    dots = fold_paper(dots, instructions, one_fold=True)
-    print("Number of dots after first fold:", len(dots))
-
-
-def part2(dots: set[tuple[int, int]], instructions: list[tuple[str, int]]) -> None:
+def read_transparent_paper(transparent_paper: list[list[str]]) -> None:
     print("=" * 10, "part 2", "=" * 10)
-    dots = fold_paper(dots, instructions, one_fold=False)
-    grid = create_transparent_paper(dots)
-    read_transparent_paper(grid)
+    for row in transparent_paper:
+        print("".join(row))
 
 
 def main() -> None:
     dots, instructions = read_data()
-    part1(dots, instructions)
-    part2(dots, instructions)
+    dots = fold_paper(dots, instructions, one_fold=False)
+    transparent_paper = create_transparent_paper(dots)
+    read_transparent_paper(transparent_paper)
 
 
 if __name__ == "__main__":
