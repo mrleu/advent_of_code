@@ -52,7 +52,7 @@ def read_transparent_paper(dots: set[tuple[int, int]]) -> None:
     max_y = max([y for (x, y) in dots])
     for y in range(max_y + 1):
         for x in range(max_x + 1):
-            print(end="#" if (x, y) in dots else ".")
+            print(end="#" if (x, y) in dots else " ")
         print()
 
 
