@@ -19,7 +19,7 @@ def create_polymer_template(
 
 
 def create_pair_insertions_map(pair_insertions: str) -> dict[str, str]:
-    mapping = dict()
+    mapping = {}
     for x in pair_insertions.strip().split("\n"):
         start, end = x.split(" -> ")
         mapping[start] = end
