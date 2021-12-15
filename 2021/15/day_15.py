@@ -7,10 +7,9 @@ def read_data():
         return [list(map(int, list(x))) for x in raw.strip().split("\n")]
 
 
-def dijkstra(data, five_times):
-    multiple = 5 if five_times else 1
-    nrows = len(data) * multiple
-    ncols = len(data[0]) * multiple
+def dijkstra(data, multiply):
+    nrows = len(data) * multiply
+    ncols = len(data[0]) * multiply
 
     def risk_level(i, j):
         row = len(data)
@@ -39,10 +38,10 @@ def dijkstra(data, five_times):
 def main():
     data = read_data()
     print("=" * 10, "part 1", "=" * 10)
-    dijkstra(data, five_times=False)
+    dijkstra(data, multiply=1)
 
     print("=" * 10, "part 2", "=" * 10)
-    dijkstra(data, five_times=True)
+    dijkstra(data, multiply=5)
 
 
 if __name__ == "__main__":
