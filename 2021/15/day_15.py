@@ -28,9 +28,11 @@ def dijkstra(data, multiply):
         distance, u = heapq.heappop(heap)
         for delta in ((0, 1), (1, 0), (-1, 0), (0, -1)):
             if (neighbor := tuple(map(sum, zip(u, delta)))) in distances:
-                if (new_dist := distance + risk_level(*neighbor)) < distances[neighbor]:
-                    distances[neighbor] = new_dist
-                    heapq.heappush(heap, (new_dist, neighbor))
+                if (distance_ := distance + risk_level(*neighbor)) < distances[
+                    neighbor
+                ]:
+                    distances[neighbor] = distance_
+                    heapq.heappush(heap, (distance_, neighbor))
 
     print(distances[(nrows - 1, ncols - 1)])
 
