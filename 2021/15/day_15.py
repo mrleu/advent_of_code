@@ -21,7 +21,7 @@ def five_times(data):
     return data
 
 
-def dijkstra(data, unvisited_set={}, nodes={}):
+def dijkstra(data):
     distances = {
         (c, r): float("inf") for r in range(len(data)) for c in range(len(data[0]))
     }
