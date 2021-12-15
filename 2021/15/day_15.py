@@ -1,4 +1,3 @@
-import copy
 import heapq
 
 
@@ -9,59 +8,49 @@ def read_data():
 
 
 def five_times(data):
-    prev_updated = []
+    n_row = len(data)
+    n_col = len(data[0])
+
     for row in data:
-        temp = row.copy()
-        for n in range(1, 5):
-            temp += [x + n if x + n <= 9 else x + n - 9 for x in row]
-        prev_updated.append(temp)
+        for chunk in range(4):
+            row += [((col + 1) % 10) or 1 for col in row[n_col * chunk :]]
 
-    updated = []
-    updated += copy.deepcopy(prev_updated)
-    for n in range(1, 5):
-        new_temp = copy.deepcopy(prev_updated)
-        for row in range(len(new_temp)):
-            for col in range(len(new_temp[0])):
-                new_temp[row][col] = (
-                    new_temp[row][col] + n
-                    if new_temp[row][col] + n <= 9
-                    else new_temp[row][col] + n - 9
-                )
-        updated += new_temp
-    return updated
+    for chunk in range(4):
+        for row in data[n_row * chunk :]:
+            data.append([((col + 1) % 10) or 1 for col in row])
+    return data
 
 
-def find_mininum_path(data):
+def dijkstra(data, unvisited_set={}, nodes={}):
+    distances = {
+        (c, r): float("inf") for r in range(len(data)) for c in range(len(data[0]))
+    }
+    start = (0, 0)
+    distances[start] = 0
+
     heap = []
-    heapq.heappush(heap, (0, (0, 0)))
-    seen = dict()
+    heapq.heappush(heap, (0, start))
 
-    while True:
-        risk_level, current = heapq.heappop(heap)
-
-        if current[0] == len(data[0]) - 1 and current[1] == len(data) - 1:
-            print(risk_level)
-            break
-
-        for dx, dy in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-            nei_x, nei_y = current[0] + dx, current[1] + dy
-            if 0 <= nei_x < len(data[0]) and 0 <= nei_y < len(data):
-                new_cost = risk_level + data[nei_y][nei_x]
-
-                if (nei_x, nei_y) in seen and seen[(nei_x, nei_y)] <= new_cost:
-                    continue
-
-                seen[(nei_x, nei_y)] = new_cost
-                heapq.heappush(heap, (new_cost, (nei_x, nei_y)))
+    while heap:
+        distance, u = heapq.heappop(heap)
+        for dr, dc in ((0, 1), (1, 0), (-1, 0), (0, -1)):
+            nr, nc = u[0] + dr, u[1] + dc
+            if 0 <= nr < len(data) and 0 <= nc < len(data[0]):
+                neighbor = (nr, nc)
+                if (new_dist := distance + data[nr][nc]) < distances[neighbor]:
+                    distances[neighbor] = new_dist
+                    heapq.heappush(heap, (new_dist, neighbor))
+    print(distances[(len(data[0]) - 1, len(data) - 1)])
 
 
 def main():
     data = read_data()
     print("=" * 10, "part 1", "=" * 10)
-    find_mininum_path(data)
+    dijkstra(data)
+
     five_times_data = five_times(data)
     print("=" * 10, "part 2", "=" * 10)
-    find_mininum_path(five_times_data)
+    dijkstra(five_times_data)
 
 
 if __name__ == "__main__":
