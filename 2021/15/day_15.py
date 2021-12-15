@@ -28,8 +28,7 @@ def dijkstra(data):
     start = (0, 0)
     distances[start] = 0
 
-    heap = []
-    heapq.heappush(heap, (0, start))
+    heap = [(0, start)]
 
     while heap:
         distance, u = heapq.heappop(heap)
