@@ -18,16 +18,17 @@ def dijkstra(data, five_times):
         risk = (i // row + j // col + data[i % row][j % col]) % 9
         return 9 if risk == 0 else risk
 
-    distances = {(c, r): float("inf") for r in range(nrows) for c in range(ncols)}
-    start = (0, 0)
-    distances[start] = 0
+    distances = {
+        (c, r): 0 if (c, r) == (0, 0) else float("inf")
+        for r in range(nrows)
+        for c in range(ncols)
+    }
 
-    heap = [(0, start)]
+    heap = [(0, (0, 0))]
     while heap:
         distance, u = heapq.heappop(heap)
         for delta in ((0, 1), (1, 0), (-1, 0), (0, -1)):
-            neighbor = tuple(map(sum, zip(u, delta)))
-            if neighbor in distances:
+            if (neighbor := tuple(map(sum, zip(u, delta)))) in distances:
                 if (new_dist := distance + risk_level(*neighbor)) < distances[neighbor]:
                     distances[neighbor] = new_dist
                     heapq.heappush(heap, (new_dist, neighbor))
