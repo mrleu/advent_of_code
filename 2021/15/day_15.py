@@ -15,7 +15,7 @@ def dijkstra(data, five_times):
     def risk_level(i, j):
         row = len(data)
         col = len(data[0])
-        risk = (i // row) + (j // col + data[i % row][j % col]) % 9
+        risk = (i // row + j // col + data[i % row][j % col]) % 9
         return 9 if risk == 0 else risk
 
     distances = {(c, r): float("inf") for r in range(nrows) for c in range(ncols)}
