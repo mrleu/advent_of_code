@@ -44,8 +44,7 @@ def trickshot(x_grad, y_grad, target_area):
 
         y_grad -= 1
 
-        if coordinate.y < furthest:
-            return False, None
+    return False, None
 
 
 def grid_search(target_area):
