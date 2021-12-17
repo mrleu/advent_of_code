@@ -50,7 +50,7 @@ def trickshot(x_grad, y_grad, target_area):
 def grid_search(target_area):
     works = set()
     highest = []
-    for x_grad in range(-200, 200):
+    for x_grad in range(target_area[0][1] + 1):
         for y_grad in range(-200, 200):
             made_it, high_y = trickshot(x_grad, y_grad, target_area)
             if made_it:
